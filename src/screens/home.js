@@ -31,31 +31,32 @@ function Home() {
 
     return (
         <div className="app">
-            <div>
+            <div className='container'>
+                <div className='row mt-5'>
+                    Name: <input class="form-control mb-2" onChange={e => { setName(e.target.value); }} />
+                    id: <input class="form-control mb-2" onChange={e => { setId(e.target.value); }} />
+                    CardNumber: <input class="form-control mb-2" onChange={e => { setCardNumber(e.target.value); }} />
+                    <Button onClick={generateVoucher}>Generate Voucher</Button>
 
 
-                Name: <input onChange={e => { setName(e.target.value); }} />
-                id: <input onChange={e => { setId(e.target.value); }} />
-                CardNumber: <input onChange={e => { setCardNumber(e.target.value); }} />
-                <Button onClick={generateVoucher}>Generate Voucher</Button>
+                    {openModal ?
+                        <div className='modaal-container'>
+                            <div className='modaal'>
+                                <PDFExport className="pdf-container" ref={pdfExportComponent}>
+                                    <div className={`pdf-page ${layoutSelection.value}`}>
 
-
-                {openModal ?
-                    <div className='modaal'>
-                        <PDFExport ref={pdfExportComponent}>
-                            <div className={`pdf-page ${layoutSelection.value}`}>
-
-                                <p>Name: {name}</p>
-                                <p>Id: {id}</p>
-                                <p>Card Number: {CardNumber}</p>
+                                        <p>Name: {name}</p>
+                                        <p>Id: {id}</p>
+                                        <p>Card Number: {CardNumber}</p>
+                                    </div>
+                                </PDFExport>
+                                <Button onClick={handleExportWithComponent}>Download</Button>
                             </div>
-                        </PDFExport>
-                        <button onClick={handleExportWithComponent}>Download</button>
-                    </div>
-                    :
-                    null
-                }
-
+                        </div>
+                        :
+                        null
+                    }
+                </div>
             </div>
         </div>
     );
