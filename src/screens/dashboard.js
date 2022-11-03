@@ -1,9 +1,44 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
+import AuthService from '../services/auth-service';
+import Stack from '@mui/material/Stack';
+import Slider from '@mui/material/Slider';
+import VolumeDown from '@mui/icons-material/VolumeDown';
+import VolumeUp from '@mui/icons-material/VolumeUp';
+import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
+
+
+
+
+
+
 import '../styles/dashboard/dashboard.css';
 import { Link } from 'react-router-dom';
 
 
 const Dashboard = () => {
+
+    const [state, setState] = useState([]);
+
+
+
+    useEffect(() => {
+        getData();
+
+    }, []);
+
+    const getData = async () => {
+        const data = await fetch(
+            "https://jsonplaceholder.typicode.com/users")
+            .then((res) => res.json())
+            .then((json) => {
+                setState(json);
+            })
+        console.log("state", state);
+    }
+
+
+
     return (
         <div className='body-dashboard'>
             <div className="grid-container">
@@ -30,33 +65,11 @@ const Dashboard = () => {
                 </aside>
 
                 <main className="main">
-                    <div className="main-header">
-                        <div className="main-header__heading">Hello User</div>
-                        <div className="main-header__updates">Recent Items</div>
-                    </div>
 
                     <div className="main-overview">
                         <Link to="billing">
                             <div className="overviewcard">
                                 <div className="overviewcard__icon">BILLING</div>
-                                <div className="overviewcard__info">Card</div>
-                            </div>
-                        </Link>
-                        <Link to="#">
-                            <div className="overviewcard">
-                                <div className="overviewcard__icon">Item</div>
-                                <div className="overviewcard__info">Card</div>
-                            </div>
-                        </Link>
-                        <Link to="#">
-                            <div className="overviewcard">
-                                <div className="overviewcard__icon">Item</div>
-                                <div className="overviewcard__info">Card</div>
-                            </div>
-                        </Link>
-                        <Link to="#">
-                            <div className="overviewcard">
-                                <div className="overviewcard__icon">Item</div>
                                 <div className="overviewcard__info">Card</div>
                             </div>
                         </Link>
