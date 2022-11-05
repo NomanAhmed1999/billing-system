@@ -3,6 +3,8 @@ import '../styles/sign-up/sign-up.css'
 import { Link } from 'react-router-dom';
 import Img from '../assests/avatar-img.png'
 import { useNavigate } from 'react-router-dom';
+import CircularProgress from '@mui/material/CircularProgress';
+
 
 
 const SignUp = () => {
@@ -19,10 +21,11 @@ const SignUp = () => {
     const [pass, setPass] = useState('');
     const [cPass, setCPass] = useState('');
     const [err, setErr] = useState('');
-
+    const [loading, setLoading] = useState(false);
 
 
     const signUp = () => {
+        setLoading(true);
         let obj = {
             "Username": name,
             "email": email,
@@ -42,11 +45,14 @@ const SignUp = () => {
             .then(data => {
                 console.log("data", data);
                 if (data.error) {
+                    setLoading(false);
+
                     setErr(data.error)
                     setTimeout(() => {
                         setErr('')
                     }, 3000);
                 } else {
+                    setLoading(false);
                     localStorage.setItem("token", data.token);
                     navigate("/dashboard")
                 }
@@ -63,7 +69,7 @@ const SignUp = () => {
                     <div className="img-left d-md-flex d-none"></div>
 
                     <div className="card-body d-flex flex-column justify-content-center">
-                        <h4 className="title text-center mt-4 pb-3">Sign Up accont</h4>
+                        <h4 className="title text-center mt-4 pb-3 title-loading">Sign Up accont{loading ? <CircularProgress color="success" size={20} /> : null}</h4>
                         {err ?
                             <p style={{ color: 'red', width: '350px' }}>{err}</p>
                             :

@@ -48,7 +48,8 @@ const Dashboard = () => {
 
                 <header className="header">
                     <div className="header__search">Search...</div>
-                    <div className="header__avatar">Your face</div>
+                    <Link to="/"><div className="header__avatar">Log Out</div></Link>
+
                 </header>
 
                 <aside className="sidenav">
