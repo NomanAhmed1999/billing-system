@@ -11,9 +11,17 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 
 
-
 import '../styles/dashboard/dashboard.css';
 import { Link } from 'react-router-dom';
+import SvgIcon from '@mui/material/SvgIcon';
+
+function HomeIcon(props) {
+    return (
+        <SvgIcon {...props}>
+            <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z" />
+        </SvgIcon>
+    );
+}
 
 
 const Dashboard = () => {
@@ -57,8 +65,8 @@ const Dashboard = () => {
                         <i className="fas fa-times sidenav__brand-close"></i>
                     </div>
                     <ul className="sidenav__list">
-                        <Link to="billing"><li className="sidenav__list-item">Billing</li></Link>
-                        <li className="sidenav__list-item">Item Two</li>
+                        <Link to="billing"><li className="sidenav__list-item">Billing <HomeIcon fontSize="small" /></li></Link>
+                        <Link to="history"><li className="sidenav__list-item">History</li></Link>
                         <li className="sidenav__list-item">Item Three</li>
                         <li className="sidenav__list-item">Item Four</li>
                         <li className="sidenav__list-item">Item Five</li>
@@ -68,12 +76,20 @@ const Dashboard = () => {
                 <main className="main">
 
                     <div className="main-overview">
-                        <Link to="billing">
-                            <div className="overviewcard">
-                                <div className="overviewcard__icon">BILLING</div>
-                                <div className="overviewcard__info">Card</div>
-                            </div>
-                        </Link>
+                        <div>
+                            <Link to="billing">
+                                <div className="overviewcard">
+                                    <div className="overviewcard__icon">BILLING</div>
+                                </div>
+                            </Link>
+                        </div>
+                        <div>
+                            <Link to="history">
+                                <div className="overviewcard">
+                                    <div className="overviewcard__icon">History</div>
+                                </div>
+                            </Link>
+                        </div>
                     </div>
                 </main>
 

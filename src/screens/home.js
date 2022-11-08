@@ -12,7 +12,7 @@ function Home() {
     const [openModal, setOpenModal] = useState(false);
     const [payment, setPaymen] = useState('');
     const [pname, setPName] = useState('');
-    const [pId, setPId] = useState(0);
+    const [err, setErr] = useState(0);
     const [pEmail, setPEmail] = useState('');
     const [pAccountNumber, setPAccountNumber] = useState('');
     const [notShow, setNotShow] = useState(true);
@@ -23,10 +23,36 @@ function Home() {
     });
 
 
-    const generateVoucher = () => {
-        console.log("dasdas");
-        setOpenModal(true);
-        handleForDB();
+    const generateVoucher = async () => {
+        const apiVariable = "http://localhost:3000/api/v1";
+        let uid = await localStorage.getItem("user_id");
+        console.log("uid", uid);
+        let obj = {
+            name: name,
+            cardNo: CardNumber,
+            id: uid
+        }
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(obj)
+        };
+        fetch(`${apiVariable}/transaction/create`, requestOptions)
+            .then(response => response.json())
+            .then(data => {
+                console.log("data", data);
+                if (data.status == "error") {
+                    setErr(data.error)
+                    setTimeout(() => {
+                        setErr('')
+                    }, 3000);
+                } else {
+                    console.log("else");
+                    setOpenModal(true);
+                    handleForDB();
+                }
+            });
+
     }
 
     const pdfExportComponent = useRef(null);
@@ -61,13 +87,13 @@ function Home() {
         <div className="app">
             <div className='container'>
                 <div className='row mt-5'>
-                    Your Name: <input class="form-control mb-2" onChange={e => { setName(e.target.value); }} />
-                    Your Email: <input class="form-control mb-2" onChange={e => { setEmail(e.target.value); }} />
-                    Your Card Number: <input class="form-control mb-2" onChange={e => { setCardNumber(e.target.value); }} />
-                    Pay: <input class="form-control mb-2" onChange={e => { setPaymen(e.target.value); }} />
-                    Partner Name: <input class="form-control mb-2" onChange={e => { setPName(e.target.value); }} />
-                    Partner Email: <input class="form-control mb-2" onChange={e => { setPEmail(e.target.value); }} />
-                    Partner Account Number: <input class="form-control mb-2" onChange={e => { setPAccountNumber(e.target.value); }} />
+                    Your Name: <input className="form-control mb-2" onChange={e => { setName(e.target.value); }} />
+                    Your Email: <input className="form-control mb-2" onChange={e => { setEmail(e.target.value); }} />
+                    Your Card Number: <input className="form-control mb-2" onChange={e => { setCardNumber(e.target.value); }} />
+                    Pay: <input className="form-control mb-2" onChange={e => { setPaymen(e.target.value); }} />
+                    Partner Name: <input className="form-control mb-2" onChange={e => { setPName(e.target.value); }} />
+                    Partner Email: <input className="form-control mb-2" onChange={e => { setPEmail(e.target.value); }} />
+                    Partner Account Number: <input className="form-control mb-2" onChange={e => { setPAccountNumber(e.target.value); }} />
                     <Button onClick={generateVoucher}>Submit</Button>
 
 

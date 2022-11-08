@@ -44,7 +44,11 @@ const Login = () => {
                 } else {
                     setLoading(false);
                     localStorage.setItem("token", data.token);
-                    navigate("/dashboard");
+                    if (data.data.user) {
+                        console.log("user data", data.data.user);
+                        JSON.stringify(localStorage.setItem("user_id", data.data.user.ID));
+                        navigate("/dashboard");
+                    }
                 }
             });
     }

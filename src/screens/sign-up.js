@@ -54,7 +54,11 @@ const SignUp = () => {
                 } else {
                     setLoading(false);
                     localStorage.setItem("token", data.token);
-                    navigate("/dashboard")
+                    if (data.data.user) {
+                        JSON.stringify(localStorage.setItem("user_id", data.data.user.ID));
+                        console.log("user data", data.data.user);
+                        navigate("/dashboard")
+                    }
                 }
             });
     }
